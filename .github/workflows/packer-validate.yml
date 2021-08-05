@@ -1,12 +1,23 @@
-name: Validate packer template file in a directory
-on: 
-  pull_request:
+---
+
+name: Packer
+
+on:
+  push:
+
 jobs:
-  packer_validate:
-    runs-on: hashicorp/packer:1.6.4
+  packer:
+    runs-on: ubuntu-latest
+    name: packer
+
     steps:
-      - name: Packer validate template-y without argument
-        uses: dawitnida/packer-github-actions/validate@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TEMPLATE_FILE_NAME: ${{ env.TEMPLATE_FILE_NAME }}
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # validate templates
+      - name: Validate Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: packer/bastion.json
