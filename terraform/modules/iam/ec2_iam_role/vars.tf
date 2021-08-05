@@ -23,6 +23,6 @@ variable "policy_arn" {
 }
 
 variable "identifiers" {
-  type = string
+  type    = string
   default = "ec2.amazonaws.com"
 }
