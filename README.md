@@ -17,6 +17,8 @@ Some tooling is used through tis repository
 ## Quick start
 
 ### One command fits all
+> AWS account credentials must be set up in `~/.aws/credentials` file, as the *scenario* script uses *awscli* in background
+
 Run `scenario.sh` script and setup everything at once :     
 
 **./scenario.sh \<VPC ID\> \<subnet ID\> \<region\> \<keypair name\>**     
@@ -31,12 +33,15 @@ Example :
 ./scenario.sh 'vpc-89fd88f4' 'subnet-2f5f0749' 'us-east-1' 'ben'
 ```
 ### ssh service monitoring
-In addition, a `ssh-bastion-down` *Cloudwatch* alarm is set up. This alarm is based on `ssh-status` data source, which is fed by a cron script installed on bastion host.
+In addition, a `ssh-bastion-down` *Cloudwatch* alarm is set up. This alarm is based on `ssh-status` data source, which is fed by a cron script installed on bastion host.    
+Plotted values reflect the ssh service status on host, as per *systemd* `systemctl is-active` result.
 
-## How to
+## How to, details
 > These steps are done by `scenario.sh` and explained only for convenience
 
-1. Create bastion host AMI using packer (specify your VPC and subnet IDs.)
+> AWS account credentials must be set up in `~/.aws/credentials` file, as these commands use *awscli* in background
+
+### 1. Create bastion host AMI using packer (specify your VPC and subnet IDs.)
 ```shell
 #     _    __  __ ___                       _   _             
 #    / \  |  \/  |_ _|   ___ _ __ ___  __ _| |_(_) ___  _ __  
@@ -61,7 +66,7 @@ cd -
 ```
 *Estimated needed time : 7m*
 
-2. Provision AWS infrastructure with terraform (specify VPC id, subnet id and keypair name)    
+### 2. Provision AWS infrastructure with terraform (specify VPC id, subnet id and keypair name)    
 ```shell
 #  ____            _   _                   _            _             
 # | __ )  __ _ ___| |_(_) ___  _ __     __| | ___ _ __ | | ___  _   _ 
@@ -84,10 +89,10 @@ cd -
 ```
 *Estimated needed time : 10m*
 
-3. Log in     
+### 3. Log in     
 Get your bastion instance public IP address, and use the private key of existing keypair :
 ```shell
-ssh -i ~/Téléchargements/ben.pem ubuntu@3.236.161.192
+ssh -i ~/Downloaded/ben.pem ubuntu@3.236.161.192
 ```
 
 ## Destroy resources
