@@ -1,0 +1,7 @@
+---
+# bastion host
+
+- hosts: all
+  become: yes
+  roles:
+    - bastion

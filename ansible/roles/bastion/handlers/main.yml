@@ -1,0 +1,5 @@
+---
+# handlers file for bastion
+
+- name: restart ufw
+  service: name=ufw state=restarted

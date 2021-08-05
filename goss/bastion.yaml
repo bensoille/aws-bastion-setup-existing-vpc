@@ -1,0 +1,18 @@
+package:
+  openssh-server:
+    installed: true
+port:
+  tcp:22:
+    listening: true
+    ip:
+    - 0.0.0.0
+service:
+  ssh:
+    enabled: true
+    running: true
+  ufw:
+    enabled: true
+    running: true
+process:
+  sshd:
+    running: true

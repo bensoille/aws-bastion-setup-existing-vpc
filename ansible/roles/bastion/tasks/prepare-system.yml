@@ -1,0 +1,20 @@
+---
+
+- name: Update apt keys
+  command: apt-key update
+
+- name: Update apt cache
+  apt: update_cache=yes
+
+- name: Run apt upgrade
+  apt: upgrade=yes
+
+- name: Install awscli
+  apt:
+    name: awscli
+    state: present
+
+- name: Install sendmail MTA
+  apt:
+    name: sendmail
+    state: present

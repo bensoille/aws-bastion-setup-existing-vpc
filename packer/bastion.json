@@ -1,0 +1,45 @@
+{
+  "variables": {
+    "aws_vpc_id": "",
+    "aws_subnet_id": "",
+    "playbook_file": "../ansible/bastion.yml",
+    "goss_path": "../goss",
+    "goss_file": "bastion.yaml"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "ubuntu/images/*/ubuntu-focal-20.04*-amd64-server*",
+        "root-device-type": "ebs"
+      },
+      "owners": ["099720109477"],
+      "most_recent": true
+    },
+    "instance_type": "t2.micro",
+    "ssh_username": "ubuntu",
+    "ami_name": "bastion_host_{{isotime `20060102-030405`}}",
+    "vpc_id": "{{user `aws_vpc_id`}}",
+    "subnet_id": "{{user `aws_subnet_id`}}",
+    "associate_public_ip_address": true,
+    "run_tags": {
+      "Name": "Packer temporary instance for bastion AMI"
+    }
+  }],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "{{user `playbook_file`}}"
+    },
+    {
+      "type": "goss",
+      "tests": [
+        "{{user `goss_path`}}"
+      ],
+      "use_sudo": true,
+      "goss_file": "/tmp/goss/goss/{{user `goss_file`}}",
+      "sleep": "5s"
+    }
+  ]
+}

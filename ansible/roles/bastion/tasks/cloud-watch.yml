@@ -1,0 +1,18 @@
+---
+# check ssh service script
+# 1 - service active
+# 0 - service down
+- name: Copy script to monitor ssh
+  copy:
+    src: service_monitor.sh
+    dest: /usr/local/bin/service_monitor.sh
+    owner: root
+    group: root
+    mode: 0655
+
+- name: Creates a cron file under /etc/cron.d
+  cron:
+    name: ssh status to cloudwatch
+    user: root
+    job: "/usr/local/bin/service_monitor.sh ssh"
+    cron_file: ssh_status_cloudwatch

@@ -1,0 +1,34 @@
+---
+- name: Install UFW
+  apt:
+    name: ufw
+    state: latest
+
+- name: Configure ufw defaults
+  ufw: direction={{ item.direction }} policy={{ item.policy }}
+  with_items:
+    - { direction: 'incoming', policy: 'deny' }
+    - { direction: 'outgoing', policy: 'allow' }
+  notify:
+    - restart ufw
+
+- name: Allow SSH
+  ufw:
+    rule: allow
+    port: "22"
+  notify:
+    - restart ufw
+
+- name: Enable ufw logging
+  ufw: logging=on
+  notify:
+    - restart ufw
+
+- name: Enable ufw
+  ufw: state=enabled
+
+- name: "UFW status"
+  command: ufw status
+  register: ufw_status
+
+- debug: var=ufw_status.stdout_lines
