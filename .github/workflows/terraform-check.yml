@@ -1,12 +1,14 @@
-name: TFLint
-on: [push]
+name: terraform-lint
+
+on: [push, pull_request]
+
 jobs:
-  lint:
+  delivery:
+
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: terraform-linters/tflint-load-config-action@v0
-        with:
-          source-repo: me/tflint-config
-      - uses: terraform-linters/setup-tflint@v1
-      - run: tflint --format compact
+    - name: Check out code
+      uses: actions/checkout@main
+    - name: Lint Terraform
+      uses: actionshub/terraform-lint@main
