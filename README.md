@@ -61,7 +61,7 @@ cd -
 ```
 *Estimated needed time : 7m*
 
-2. Provision AWS infrastructure with terraform (specify AMI id created by packer)    
+2. Provision AWS infrastructure with terraform (specify VPC id, subnet id and keypair name)    
 ```shell
 #  ____            _   _                   _            _             
 # | __ )  __ _ ___| |_(_) ___  _ __     __| | ___ _ __ | | ___  _   _ 
@@ -84,8 +84,8 @@ cd -
 ```
 *Estimated needed time : 10m*
 
-3. Log in
-Get your bastion instance public IP address and use the private key of existing keypair :
+3. Log in     
+Get your bastion instance public IP address, and use the private key of existing keypair :
 ```shell
 ssh -i ~/Téléchargements/ben.pem ubuntu@3.236.161.192
 ```
