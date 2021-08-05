@@ -1,6 +1,6 @@
 ---
 
-name: Packer
+name: packer validate
 
 on:
   push:
