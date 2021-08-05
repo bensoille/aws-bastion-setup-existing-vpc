@@ -3,7 +3,7 @@ Given an existing AWS VPC, this IaC repository allows for ssh bastion host creat
 
 ## Prerequisites
 An AWS account with a VPC, to setup bastion host in :
-- IAM user with correct permissions (Access key ID, secret key)
+- IAM user with correct permissions (Access key ID, secret key in ~/.aws/credentials)
 - some created *keypair* with convenient type
 - the VPC ID in which to deploy bastion host
 
@@ -15,20 +15,23 @@ Some tooling is used through tis repository
 - git *2.25.1*
 
 ## Quick start
+
+### One command fits all
 Run `scenario.sh` script and setup everything at once :     
 
 **./scenario.sh \<VPC ID\> \<subnet ID\> \<region\> \<keypair name\>**     
 With :
-- VPC ID : the existing VPC to deploy to
-- subnet ID : the existing VPC's subnet to deploy to
-- region : the AWS region to deploy to
-- keypair name : the name of existing keypair to use for connection
+- *VPC ID* : the existing VPC to deploy to
+- *subnet ID* : the existing VPC's subnet to deploy to
+- *region* : the AWS region to deploy to
+- *keypair name* : the name of existing keypair to use for connection
 
 Example :
 ```shell
 ./scenario.sh 'vpc-89fd88f4' 'subnet-2f5f0749' 'us-east-1' 'ben'
 ```
-
+### ssh service monitoring
+In addition, a `ssh-bastion-down` *Cloudwatch* alarm is set up. This alarm is based on `ssh-status` data source, which is fed by a cron script installed on bastion host.
 
 ## How to
 > These steps are done by `scenario.sh` and explained only for convenience
