@@ -9,6 +9,6 @@ jobs:
 
     steps:
     - name: Check out code
-      uses: actions/checkout@main
+      uses: actions/checkout@v2
     - name: Lint Terraform
-      uses: actionshub/terraform-lint@main
+      uses: actionshub/terraform-lint@1.0.0
